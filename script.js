@@ -1,5 +1,5 @@
 //Towers are generated
-let towerA = [1, 2, 3, 4, 5, 6];
+let towerA = [1, 2, 3,];
 let towerB = [];
 let towerC = [];
 
@@ -39,13 +39,16 @@ function moveFloor(fromTower, toTower){
     return
   }
 
-  let floor = fromTower.shift()
+  let floor = fromTower[0]
   if(toTower.length === 0 || floor < toTower[0]){
     toTower.unshift(floor)
+    fromTower.shift()
     renderTowers()
   } else {
     alert("Invalid move")
   }
+  console.log('from tower',fromTower)
+  console.log('to tower',toTower)
 
 
   selectedFromTower = null
