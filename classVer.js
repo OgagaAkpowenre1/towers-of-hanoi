@@ -27,7 +27,18 @@ class TowerOfHanoi {
     this.towerCElement.addEventListener("click", () =>
       this.selectTower(this.towerC, this.towerCElement)
     );
-    this.replayBtn.addEventListener("click", () => this.gameWon = false)
+    this.replayBtn.addEventListener("click", () => this.replay())
+  }
+
+  replay() {
+    console.log("replay")
+    this.gameWon = false
+    this.towerA = [1, 2, 3]
+    this.towerB = [];
+    this.towerC = [];
+    this.selectedFromTower = null;
+    this.selectedToTower = null;
+    this.renderTowers()
   }
 
   // Method to render a single tower
@@ -47,6 +58,18 @@ class TowerOfHanoi {
 
     towerElement.appendChild(towerTitle);
   }
+
+  //Method to reset tower selection
+  resetSelection() {
+    // console.log("Resetting selection");
+    if (this.selectedFromTower) {
+      // console.log("Tower to reset", this.selectedFromTower.towerElement)
+      this.selectedFromTower.towerElement.firstChild.style.border = "none";
+    }
+    this.selectedFromTower = null;
+    this.selectedToTower = null;
+  }
+  
 
   // Method to render all towers
   renderTowers() {
@@ -86,11 +109,13 @@ class TowerOfHanoi {
   moveFloor(fromTower, toTower) {
     if (fromTower === toTower) {
       this.showToast("Cannot move a block to the same tower.");
+      this.resetSelection()
       return;
     }
 
     if (fromTower.length === 0) {
       this.showToast("No blocks to move");
+      this.resetSelection()
       return;
     }
 
@@ -103,6 +128,7 @@ class TowerOfHanoi {
       this.showToast(
         "Invalid move: can't place a larger block on a smaller one."
       );
+      this.resetSelection()
     }
   }
 
