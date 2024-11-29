@@ -1,6 +1,6 @@
 class TowerOfHanoi {
   constructor() {
-    this.towerA = [1, 2, 3]; // initial state
+    this.towerA = [1, 2, 3, 4, 5, 6, 7, 8, 9,10]; // initial state
     this.towerB = [];
     this.towerC = [];
     this.selectedFromTower = null;
@@ -31,7 +31,6 @@ class TowerOfHanoi {
   }
 
   replay() {
-    console.log("replay")
     this.gameWon = false
     this.towerA = [1, 2, 3]
     this.towerB = [];
@@ -47,14 +46,20 @@ class TowerOfHanoi {
     const towerTitle = document.createElement("h4");
     towerTitle.textContent = towerElement.id;
 
-    towerArray.forEach((floor, index) => {
+    //calc max width of container
+    const maxFloorWidth = Math.max(...towerArray.map(floor => floor * 40), 100); // Default to 100px minimum width
+    towerElement.style.width = `${maxFloorWidth + 20}px`; // Add some padding for aesthetics
+
+    towerArray.slice().reverse().forEach((floor, index) => {
       const floorDiv = document.createElement("div");
       floorDiv.classList.add("floor");
       floorDiv.style.width = floor * 40 + "px";
-      floorDiv.style.bottom = index * 32 + "px";
-      floorDiv.textContent = `Floor ${floor}`;
+      floorDiv.style.bottom = `${index*32}px`;
+      // floorDiv.textContent = `Floor ${floor}`;
+      floorDiv.style.position = "absolute"; // Ensure stacking works
       towerElement.appendChild(floorDiv);
     });
+
 
     towerElement.appendChild(towerTitle);
   }
@@ -87,14 +92,28 @@ class TowerOfHanoi {
   selectTower(towerArray, towerElement) {
     if (!this.selectedFromTower) {
       this.selectedFromTower = { towerArray, towerElement };
-      towerElement.firstChild.style.border = "2px solid red"; // Highlight selection
+      // towerElement.firstChild.style.border = "2px solid red"; // Highlight selection
+
+          // Highlight the topmost floor
+    if (towerArray.length > 0) {
+      const topFloorIndex = towerArray.length - 1;
+      const topFloor = towerElement.children[topFloorIndex];
+      topFloor.style.border = "2px solid red";
+    }
+
       console.log(`Selected from tower: ${towerElement.id}`);
     } else if (!this.selectedToTower) {
       this.selectedToTower = { towerArray, towerElement };
       console.log(`Selected to tower: ${towerElement.id}`);
 
       // Reset border highlight
-      this.selectedFromTower.towerElement.style.border = "none";
+      // this.selectedFromTower.towerElement.style.border = "none";
+      if (this.selectedFromTower.towerArray.length > 0) {
+        const topFloorIndex = this.selectedFromTower.towerArray.length - 1;
+        const topFloor = this.selectedFromTower.towerElement.children[topFloorIndex];
+        topFloor.style.border = "none";
+      }
+
       this.moveFloor(
         this.selectedFromTower.towerArray,
         this.selectedToTower.towerArray
@@ -152,4 +171,23 @@ class TowerOfHanoi {
 // When the DOM is ready, initialize the game
 document.addEventListener("DOMContentLoaded", () => {
   const game = new TowerOfHanoi();
+  const menuicon = document.getElementById('menu-icon')
+  const sidebar = document.getElementById('sidebar')
+  let menuOpen = true
+
+  menuicon.addEventListener('click', () => {
+    console.log(menuOpen)
+    console.log(window.getComputedStyle(sidebar).width)
+    if(menuOpen){
+      sidebar.style.width = "0px"
+      sidebar.style.padding ="0px"
+      sidebar.style.border = "0px"
+      menuOpen = false
+    } else {
+      sidebar.style.width = "200px"
+      sidebar.style.padding =""
+      sidebar.style.border = ""
+      menuOpen = true
+    }
+  })
 });

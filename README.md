@@ -7,3 +7,9 @@ Objectives To Be Achieved:
     4. Add extra information for players about the game
     5. Give proper styling 
     6. Add customization (themes, choose tower to start, number of floors)
+
+
+# FAQ
+What is Towers of Hanoi?
+
+https://en.wikipedia.org/wiki/Tower_of_Hanoi
