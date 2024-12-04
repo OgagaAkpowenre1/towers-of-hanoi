@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="aistyles.css">
-    <title>Towers Of Hanoi</title>
+    <title>Towers Of Hanoi</title> 
 </head>
 <body>
     <section class="navbar">
@@ -30,6 +30,26 @@
             </div>
         </section>
     </section>
+
+    <div id="game-setup-modal" class="modal">
+        <div class="modal-content">
+          <h2>Game Setup</h2>
+          <form id="game-setup-form">
+            <label for="starting-tower">Select Starting Tower:</label>
+            <select id="starting-tower" name="starting-tower">
+              <option value="A">Tower A</option>
+              <option value="B">Tower B</option>
+              <option value="C">Tower C</option>
+            </select>
+      
+            <label for="num-floors">Number of Floors:</label>
+            <input type="number" id="num-floors" name="num-floors" min="1" max="10" value="3" required>
+      
+            <button type="submit">Start Game</button>
+          </form>
+        </div>
+      </div>
+      
 
     <div class="toast-container" id="errorToast"></div>
     <button id="replay" class="replay-btn">Replay?</button>
