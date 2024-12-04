@@ -12,7 +12,9 @@ class TowerOfHanoi {
       startingTower === "C"
         ? Array.from({ length: numFloors }, (_, i) => i + 1)
         : [];
-    
+    this.startingTower = [this.towerA, this.towerB, this.towerC].find(
+      (tower) => tower.length > 0
+    );
     this.selectedFromTower = null;
     this.selectedToTower = null;
     this.gameWon = false;
@@ -31,7 +33,7 @@ class TowerOfHanoi {
     this.towerCElement = document.getElementById("towerC");
 
     this.renderTowers(); // Initial render
-
+    console.log(this.startingTower);
     // Set up event listeners
     this.towerAElement.addEventListener("click", () =>
       this.selectTower(this.towerA, this.towerAElement)
@@ -47,12 +49,25 @@ class TowerOfHanoi {
 
   replay() {
     this.gameWon = false;
-    this.towerA = [1, 2, 3];
+    this.towerA = [];
     this.towerB = [];
     this.towerC = [];
     this.selectedFromTower = null;
     this.selectedToTower = null;
-    this.renderTowers();
+
+    // Reassign the DOM references
+    this.towerAElement = document.getElementById("towerA");
+    this.towerBElement = document.getElementById("towerB");
+    this.towerCElement = document.getElementById("towerC");
+
+    // Clear the game area
+    this.towerAElement.innerHTML = "";
+    this.towerBElement.innerHTML = "";
+    this.towerCElement.innerHTML = "";
+
+    // Show the modal for user input
+    const modal = document.getElementById("game-setup-modal");
+    modal.style.display = "flex";
   }
 
   // Method to render a single tower
@@ -114,6 +129,8 @@ class TowerOfHanoi {
     const targetTowers = [this.towerA, this.towerB, this.towerC].filter(
       (tower) => tower !== this.startingTower
     );
+
+    console.log(targetTowers);
 
     const numFloors =
       this.towerA.length + this.towerB.length + this.towerC.length;
@@ -225,6 +242,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Get user input
     const startingTower = document.getElementById("starting-tower").value;
     const numFloors = parseInt(document.getElementById("num-floors").value, 10);
+
+    // Clear old instance (if any) by re-initializing game container
+    const gameContainer = document.getElementById("game");
+    gameContainer.innerHTML = `
+    <div class="tower" id="towerA"></div>
+    <div class="tower" id="towerB"></div>
+    <div class="tower" id="towerC"></div>
+  `;
 
     // Initialize the game with user input
     new TowerOfHanoi(startingTower, numFloors);
