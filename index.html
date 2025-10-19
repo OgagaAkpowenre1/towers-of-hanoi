@@ -3,32 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="aistyles.css">
+    <link rel="stylesheet" href="styles.css">
     <title>Towers Of Hanoi</title> 
 </head>
 <body>
-    <section class="navbar">
+    <section class="navbar"> 
         <i id="menu-icon" class="fa-solid fa-bars"></i>
         <h1>Towers of Hanoi</h1>
     </section>
     <section class="content">
         <section id="sidebar" class="sidebar">
-            
-            <h2>This is the sidebar</h2>
-            <i class="fa-solid fa-circle-info"></i>
+            <div class="sidebar-content">
+                <h2><i class="fa-solid fa-puzzle-piece"></i> About the Game</h2>
+                
+                <div class="info-section">
+                    <h3><i class="fa-solid fa-history"></i> History</h3>
+                    <p>The Towers of Hanoi is a mathematical puzzle invented by French mathematician Édouard Lucas in 1883. Legend says it's based on an ancient Indian temple where priests move 64 golden disks between three diamond needles.</p>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fa-solid fa-gamepad"></i> How to Play</h3>
+                    <div class="rules">
+                        <div class="rule-item">
+                            <!-- <i class="fa-solid fa-1"></i> -->
+                            <span>Click on a tower to select the top disk</span>
+                        </div>
+                        <div class="rule-item">
+                            <!-- <i class="fa-solid fa-2"></i> -->
+                            <span>Click on another tower to move the disk there</span>
+                        </div>
+                        <div class="rule-item">
+                            <!-- <i class="fa-solid fa-3"></i> -->
+                            <span>Only one disk can be moved at a time</span>
+                        </div>
+                        <div class="rule-item">
+                            <!-- <i class="fa-solid fa-4"></i> -->
+                            <span>Never place a larger disk on top of a smaller one</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fa-solid fa-bullseye"></i> Objective</h3>
+                    <p>Move the entire stack of disks from the starting tower to any other tower, following the rules above. Try to complete it in the fewest moves possible!</p>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fa-solid fa-calculator"></i> The Math Behind It</h3>
+                    <p>The minimum number of moves required to solve the puzzle is given by the formula:</p>
+                    <div class="formula">
+                        <strong>M = 2<sup>n</sup> - 1</strong>
+                    </div>
+                    <p>Where <strong>n</strong> is the number of disks and <strong>M</strong> is the minimum moves required.</p>
+                    
+                    <div class="move-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Disks</th>
+                                    <th>Minimum Moves</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>3</td><td>7</td></tr>
+                                <tr><td>4</td><td>15</td></tr>
+                                <tr><td>5</td><td>31</td></tr>
+                                <tr><td>6</td><td>63</td></tr>
+                                <tr><td>7</td><td>127</td></tr>
+                                <tr><td>8</td><td>255</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <p class="fun-fact">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <strong>Fun Fact:</strong> With 64 disks, it would take 2<sup>64</sup>-1 moves (18,446,744,073,709,551,615). At one move per second, that's over 584 billion years!
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fa-solid fa-brain"></i> Strategy Tips</h3>
+                    <ul class="tips">
+                        <li>Always move the smallest disk first when possible</li>
+                        <li>Try to create empty towers for temporary storage</li>
+                        <li>Work on moving larger disks to their final positions early</li>
+                        <li>The puzzle can be solved recursively - solve for n-1 disks, then move the largest</li>
+                    </ul>
+                </div>
+
+                <div class="current-stats">
+                    <h3><i class="fa-solid fa-chart-simple"></i> Your Game</h3>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-label">Disks:</span>
+                            <span id="current-disks" class="stat-value">3</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Minimum Moves:</span>
+                            <span id="min-moves" class="stat-value">7</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Your Moves:</span>
+                            <span id="your-moves" class="stat-value">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         <section id="game" class="main">
-            <div class="tower" id="towerA"> 
-                
-            </div>
-        
-            <div class="tower" id="towerB">
-                
-            </div>
-        
-            <div class="tower" id="towerC">
-                
-            </div>
+            <div class="tower" id="towerA"></div>
+            <div class="tower" id="towerB"></div>
+            <div class="tower" id="towerC"></div>
         </section>
     </section>
 
@@ -50,7 +135,6 @@
           </form>
         </div>
       </div>
-      
 
     <div class="toast-container" id="errorToast"></div>
     <button id="replay" class="replay-btn">Replay?</button>

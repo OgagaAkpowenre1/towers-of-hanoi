@@ -18,8 +18,9 @@ class TowerOfHanoi {
     this.selectedFromTower = null;
     this.selectedToTower = null;
     this.gameWon = false;
+    this.moveCount = 0;
 
-    this.initializeGame();
+    this.initializeGame(); 
   }
 
   initializeGame() {
@@ -27,6 +28,8 @@ class TowerOfHanoi {
     this.replayBtn = document.getElementById("replay");
 
     this.jsConfetti = new JSConfetti(this.canvas);
+
+    this.updateStats();
 
     this.towerAElement = document.getElementById("towerA");
     this.towerBElement = document.getElementById("towerB");
@@ -54,6 +57,7 @@ class TowerOfHanoi {
     this.towerC = [];
     this.selectedFromTower = null;
     this.selectedToTower = null;
+    this.updateStats();
 
     // Reassign the DOM references
     this.towerAElement = document.getElementById("towerA");
@@ -113,7 +117,7 @@ class TowerOfHanoi {
   // Method to render all towers
   renderTowers() {
     this.renderTower(this.towerAElement, this.towerA);
-    this.renderTower(this.towerBElement, this.towerB);
+    this.renderTower(this.towerBElement, this.towerB); 
     this.renderTower(this.towerCElement, this.towerC);
     this.checkGameWon();
   }
@@ -123,7 +127,7 @@ class TowerOfHanoi {
     //   this.gameWon = true;
     //   this.winningMessage();
     // }
-    // console.log(this.gameWon);
+    // console.log(this.gameWon); 
 
     // Towers that aren't the starting tower
     const targetTowers = [this.towerA, this.towerB, this.towerC].filter(
@@ -199,6 +203,9 @@ class TowerOfHanoi {
       toTower.unshift(floor);
       fromTower.shift();
       this.renderTowers();
+
+      this.moveCount++;
+      this.updateStats();
     } else {
       this.showToast(
         "Invalid move: can't place a larger block on a smaller one."
@@ -206,6 +213,19 @@ class TowerOfHanoi {
       this.resetSelection();
     }
   }
+
+  updateStats() {
+    const currentDisks = document.getElementById('current-disks');
+    const minMoves = document.getElementById('min-moves');
+    const yourMoves = document.getElementById('your-moves');
+    
+    if (currentDisks && minMoves && yourMoves) {
+        const numDisks = this.towerA.length + this.towerB.length + this.towerC.length;
+        currentDisks.textContent = numDisks;
+        minMoves.textContent = Math.pow(2, numDisks) - 1;
+        yourMoves.textContent = this.moveCount;
+    }
+}
 
   showToast(error) {
     const toastElement = document.getElementById("errorToast");
@@ -267,9 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebar.style.border = "0px";
       menuOpen = false;
     } else {
-      sidebar.style.width = "200px";
-      sidebar.style.padding = "";
-      sidebar.style.border = "";
+      sidebar.style.width = "300px";
+      sidebar.style.padding = "25px";
+      // sidebar.style.border = "";
       menuOpen = true;
     }
   });
